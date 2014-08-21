@@ -1,3 +1,7 @@
+BEGIN{
+print "version "version
+print "vertime "vertime
+}
 {
 if(ARGIND==1) {array1[$1]=$2}
 if(ARGIND==2) {array2[$1]=$2}
@@ -11,14 +15,14 @@ END{
 	  test_result="pass"
 	  describe="data_is_ok"
 	  
-	  #url="http://10.95.36.21:8151/utest/lijie/ci/index2.php?act=insert_CIPerformanceDetail&version=7.4.0&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp=201408161458&describe="describe"&vertime=20140818"
+	  #url="http://10.95.36.21:8151/utest/lijie/ci/index2.php?act=insert_CIPerformanceDetail&version="version"&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp="date"&describe="describe"&vertime="vertime
 	  #print url > "url.txt"
 	  
 	}else if(compare(array1[key],array2[key])==0){
 		
-	  testresult="fail"
+	  test_result="fail"
 	  describe="data_unnormal_far_away_from_standard"
-	  #url="http://10.95.36.21:8151/utest/lijie/ci/index2.php?act=insert_CIPerformanceDetail&version=7.4.0&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp=201408161458&describe="describe"&vertime=20140818"
+	  #url="http://10.95.36.21:8151/utest/lijie/ci/index2.php?act=insert_CIPerformanceDetail&version="version"&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp="date"&describe="describe"&vertime="vertime
 	  #print url > "url.txt"
 	  summary=key"_test_data_uncorrect_far_away_from_expected"
 	  print summary > "error.txt"
@@ -28,11 +32,11 @@ else{
 	test_result="pass"
 	describe="data_is_ok"
 	
-	#url="http://10.95.36.21:8151/utest/lijie/ci/index2.php?act=insert_CIPerformanceDetail&version=7.4.0&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp=201408161458&describe="describe"&vertime=20140818"
+	#url="http://10.95.36.21:8151/utest/lijie/ci/index2.php?act=insert_CIPerformanceDetail&version=7.4.0&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp="$date"&describe="describe"&vertime="vertime
 	#print url > "url.txt"
 	}
 	
-	url="http://10.95.36.21:8151/utest/lijie/ci/index2.php?act=insert_CIPerformanceDetail&version=7.4.0&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp=201408161458&describe="describe"&vertime=20140818"
+	url="http://10.95.36.21:8151/utest/lijie/ci/index2.php?act=insert_CIPerformanceDetail&version="version"&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp="$date"&describe="describe"&vertime="vertime
 	print url > "url.txt"
  }
  }
