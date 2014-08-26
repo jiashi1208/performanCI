@@ -241,7 +241,7 @@ public class SystemPerformTest
         BufferedReader br = new BufferedReader(new FileReader(file));
         StringBuffer sb = new StringBuffer();
         
-        temp = br.readLine();
+        String temp = br.readLine();
         while (temp != null)
         {
           if (temp.contains("START.*WelcomeScreen")) {
@@ -263,7 +263,7 @@ public class SystemPerformTest
       }
       String st = gettime(startLine);
       String et = gettime(endLine);
-      String temp = mytime(et) - mytime(st);
+     // String temp = mytime(et) - mytime(st);
     }
   }
   
@@ -277,12 +277,12 @@ public class SystemPerformTest
     return 1;
   }
   
-  public void dealResult(String date)
+  public void dealResult(/*String date*/)
     throws IOException
   {
-    File time1 = new File("E:\\xingneng\\" + date + "\\time_1.csv");
-    File time2 = new File("E:\\xingneng\\" + date + "\\time_2.csv");
-    File time3 = new File("E:\\xingneng\\" + date + "\\time_3.csv");
+    File time1 = new File("D:\\data\\xingneng\\20140826033350\\time_1.csv");
+    File time2 = new File("D:\\data\\xingneng\\20140826033350\\time_2.csv");
+    File time3 = new File("D:\\data\\xingneng\\20140826033350\\time_3.csv");
     
     BufferedReader time1_b = new BufferedReader(new FileReader(time1));
     String temp1 = time1_b.readLine();
@@ -320,7 +320,7 @@ public class SystemPerformTest
     float startTime = (Float.parseFloat(time11) + Float.parseFloat(time22) + Float.parseFloat(time33)) / 3.0F;
     
 
-    File sysperf = new File("E:\\xingneng\\" + date + "\\SysPerf\\sysperf_result.csv");
+    File sysperf = new File("D:\\data\\xingneng\\20140826033350\\SysPerf\\sysperf_result.csv");
     StringBuffer sb = new StringBuffer();
     sb.append("StartTime---" + startTime + "\n" + "\n");
     
@@ -335,7 +335,46 @@ public class SystemPerformTest
     }
     sb.append("\n");
     
-    File result1 = new File("E:\\xingneng\\" + date + "\\TotalResult.csv");
+    File search = new File("D:\\data\\xingneng\\20140826033350\\SearchPerf");
+    File[] searchResult = search.listFiles();
+    
+    String[] choice = { "SingleSearch", "MultiSearch", "BusLine", "CarLine", "WalkLine", "GeneralSearch", "NearbySearch", "ReGeoSearch", "Sug" };
+    for (File file : searchResult) {
+      if (file.getName().contains("SearchResult"))
+      {
+       // BufferedReader br1 = new BufferedReader(new FileReader(file));
+        sb.append("SearchType---Time---NetIn---NetOut\n");
+        for (int i = 0; i < 9; i++)
+        {
+          /*String line = br1.readLine();
+          String[] array=line.split(",");
+
+        	if(choice[i].equalsIgnoreCase(array[0])){
+        		sb.append(choice[i] + "---," + array[1] + "," + array[2] + "," + array[3] + "\n");
+        	} else{
+        		sb.append(choice[i] + "---," + -1 + "," + -1 + "," + -1 + "\n");
+        	}
+           // sb.append(choice[i] + "---," + line.split(",")[1] + "," + line.split(",")[2] + "," + line.split(",")[3] + "\n");
+        */
+        	boolean isEmpty=true;    
+			BufferedReader br1 = new BufferedReader(new FileReader(file));
+			String line=br1.readLine();
+			while (line != null) {
+				if(choice[0].equalsIgnoreCase(line.split(",")[0])){
+					sb.append(choice[i] + "---," + line.split(",")[1] + "," + line.split(",")[2] + "," + line.split(",")[3] + "\n");
+					isEmpty=false;
+					break;
+				}
+				line=br1.readLine();
+			}
+			if(isEmpty){
+				sb.append(choice[i] + "---," + -1 + "," + -1 + "," + -1 + "\n");
+			}
+        }
+        break;
+      }
+    }
+    File result1 = new File("D:\\data\\xingneng\\20140826033350\\TotalResult.csv");
     FileOutputStream fos = new FileOutputStream(result1);
     Object out = new OutputStreamWriter(fos, "UTF-8");
     ((Writer)out).write(sb.toString());
@@ -347,6 +386,6 @@ public class SystemPerformTest
   {
     SystemPerformTest sys = new SystemPerformTest();
     
-    sys.dealResult(args[0]);
+    sys.dealResult(/*args[0]*/);
   }
 }
