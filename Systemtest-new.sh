@@ -57,12 +57,12 @@ tmp=0
 tmp1=0
 tmp2=0
 if [ 1 -eq 2 ]; then
-echo "make pc local data diretory "$date
-mkdir $date
+echo "make pc local diretory "$date" and data for put test data"
+mkdir -p $date/data
 
 echo "commit ctsjob to musi"
 curl -d "appurl=http://10.81.12.242:8789/apksfordaily/release/BaiduMap-release.apk&email=shijia@baidu.com,caoxiurong@baidu.com&testtype=full"  http://musi.baidu.com/?r=BqsAjax/SubmitCITask
-fi
+
 
 echo "wget new BaiduMap apk"
 wget -P $date http://10.81.12.242:8789/apksfordaily/release/BaiduMap-release.apk
@@ -203,8 +203,17 @@ p1=$!
   p2=$!
 
   wait p1 && wait p2
+  
+fi
 
   echo   "Success! Finish test" 
+  
+  echo "deal with data from test data"
+  java -jar dataproc.jar $date
+  cp $date/TotalResult.csv .
+  
+  echo "zip test data" 
+  tar -czf $date/all.tar.gz $date/data
 }
 
 proc $1 $2 $3 $4 $5
