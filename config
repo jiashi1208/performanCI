@@ -1,2 +1,4 @@
-#device1=f0bc0450
-#device2=20454757
+device1=f0bc0450
+device2=20454757
+mbinfo="机型:三星NT-9300<br/>系统:Android4.1.1系统<br/>网络:baidu_wifi<br/>"
+consumetime=8h30m

@@ -16,6 +16,14 @@ echo ${1} | od -t x |awk '{
 }'
 }
 
+. ./config
+mbinfo=$mbinfo
+#对其进行编码
+echo "编码前" $mbinfo
+mbinfo=$(urlEncode  $mbinfo);
+
+echo $mbinfo
+echo $consumetime
 
 date=$1
 version=$2
@@ -52,7 +60,7 @@ if [ -f error.txt ]
   describe="test_pass_everyvalue_correct"
 fi
 #no runtime
-url="http://180.149.144.140/productci/index2.php?act=insert_CIPerformance&version="$version"&testname=android_performance_test&testresult="$test_result"&fromplatform=android&timestamp="$date"&runtime="$date"&describe="$describe"&vertime="$vertime
+url="http://180.149.144.140/productci/index2.php?act=insert_CIPerformance&version="$version"&consumetime="$consumetime"&mbinfo="$mbinfo"&testname=android_performance_test&testresult="$test_result"&fromplatform=android&timestamp="$date"&runtime="$date"&describe="$describe"&vertime="$vertime
 echo $url >>url.txt
 
 #对字符串进行编码
