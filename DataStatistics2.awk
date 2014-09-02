@@ -19,18 +19,18 @@ END{
 	  
 	     #排除比较电量，网络，最高速度等。
 	     test_result="pass"
-	     describe="data_is_ok数据正确"
+	     describe=key"数据正常"
 	  
 	  }else {
 	  
 	    #没有值，为-1
 	    if(match(array1[key],"-1.00")||match(array1[key],"-1")){
 		  test_result="fail"
-	      describe="data_is_null数据为空" 
-		  summary=key"_value_is_null"
+	      describe=key"数据为空" 
+		  summary=key"数据为空;"
 		  print summary > "error.txt"
 		  
-		  url="http://180.149.144.140/productci/index2.php?act=insert_CIPerformanceDetail&version="version"&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp="date"&describe="describe"&vertime="vertime
+		  url="http://180.149.144.140/ci/DataProcess.php?act=insert_CIPerformanceDetail&version="version"&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp="date"&describe="describe"&vertime="vertime
 	      print url > "url.txt"
 		  continue
 		}
@@ -42,13 +42,13 @@ END{
 		}else if(compare(array1[key],array2[key])==0){
 		
 		 test_result="fail"
-	     describe="data_uncorrect_far_away_from_standard_value"
-		 summary=key"_test_data_uncorrect_far_away_from_expected"
+	     describe=key"数据不正常,变化幅度超过标准值20%"
+		 summary=key"数据不正常,变化幅度超过标准值20%;"
 		 print summary > "error.txt"
 		}
 	  }
 	  
-	  url="http://180.149.144.140/productci/index2.php?act=insert_CIPerformanceDetail&version="version"&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp="date"&describe="describe"&vertime="vertime
+	  url="http://180.149.144.140/ci/DataProcess.php?act=insert_CIPerformanceDetail&version="version"&testname="key"&testitem="key"&testdata="array1[key]"&testresult="test_result"&testdetail=describetestdetail&timestamp="date"&describe="describe"&vertime="vertime
 	  print url > "url.txt"
  
    }
