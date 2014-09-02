@@ -16,6 +16,7 @@ echo ${1} | od -t x |awk '{
 }'
 }
 
+
 . ./config
 mbinfo=$mbinfo
 #对其进行编码
@@ -28,9 +29,9 @@ echo $consumetime
 date=$1
 version=$2
 vertime=$3
-mkdir $date
+#mkdir $date
 
-php CompareData_no_op.php
+php CompareData.php
 
 cp config.txt $date
 cp Result_reference.txt $date
@@ -52,15 +53,16 @@ if [ -f error.txt ]
     test_result="fail"
     while read line  
     do  
-      describe+="|"$line
+      describe+=$line+"</br>"
     done <error.txt 
  else
   echo "test pass"
   test_result="pass"
-  describe="test_pass_everyvalue_correct"
+  describe="测试通过！每项数据都测试完成,且数据都在合理范围内变化."
 fi
 #no runtime
 url="http://180.149.144.140/productci/index2.php?act=insert_CIPerformance&version="$version"&consumetime="$consumetime"&mbinfo="$mbinfo"&testname=android_performance_test&testresult="$test_result"&fromplatform=android&timestamp="$date"&runtime="$date"&describe="$describe"&vertime="$vertime
+#url="http://180.149.144.140/ci/DataProcess.php?act=insert_CIPerformance&version="$version"&testname=android_performance_test&testresult="$test_result"&fromplatform=android&timestamp="$date"&runtime="$date"&describe="$describe"&vertime="$vertime
 echo $url >>url.txt
 
 #对字符串进行编码
