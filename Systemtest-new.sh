@@ -56,16 +56,17 @@ date=$5
 tmp=0
 tmp1=0
 tmp2=0
-if [ 1 -eq 2 ]; then
+#if [ 1 -eq 2 ]; then
 echo "make pc local diretory "$date" and data for put test data"
 mkdir -p $date/data
 
 echo "commit ctsjob to musi"
-curl -d "appurl=http://10.81.12.242:8789/apksfordaily/release/BaiduMap-release.apk&email=shijia@baidu.com,caoxiurong@baidu.com&testtype=full"  http://musi.baidu.com/?r=BqsAjax/SubmitCITask
+curl -d "appurl=http://10.99.113.16:8789/apksfordaily/release/BaiduMap-release.apk&email=shijia@baidu.com,caoxiurong@baidu.com&testtype=full"  http://musi.baidu.com/?r=BqsAjax/SubmitCITask
 
 
 echo "wget new BaiduMap apk"
-wget -P $date http://10.81.12.242:8789/apksfordaily/release/BaiduMap-release.apk
+wget -P $date http://10.99.113.16:8789/apksfordaily/release/BaiduMap-release.apk
+
 
 echo "rename BaiduMap with date"
 newNameAPK="BaiduMap-release"$date".apk"
@@ -112,6 +113,7 @@ sleep 20
 {
   echo "device2 for  search test"
   
+ # if [ 1 -eq 2 ]; then
   adb -s $device2 shell rm -r /sdcard/autotester/searchperf/*
   adb -s $device2 shell rm -r /sdcard/autotester/result/*
   
@@ -132,12 +134,13 @@ sleep 20
 
   echo "search test finish,and start to deal data"
   sleep 5
-  mkdir -p  ./$date/SearchPerf
+  mkdir -p  ./$date/data/SearchPerf
   sleep 2
 
-  adb -s $device2 pull "/sdcard/AutoTester/SearchPerf" "./$date/SearchPerf"
+  adb -s $device2 pull "/sdcard/AutoTester/SearchPerf" "./$date/data/SearchPerf"
   sleep 5
   echo "finish search test"
+ # fi
   
 }&
 
@@ -146,7 +149,7 @@ p1=$!
 {
   echo "device 1  for bg fg op test"
  
-  adb -s $device1 shell rm -r /sdcard/autotester/searchperf/*
+  adb -s $device1 shell rm -r /sdcard/autotester/SysPerf/*
   adb -s $device1 shell rm -r /sdcard/autotester/result/*
 
   adb -s $device1 shell am instrument -e class com.baidu.map.perftest.BatteryTestPerf_V630\#prepareForTestMI2 -w com.baidu.map.perftest/com.zutubi.android.junitreport.JUnitReportTestRunner
@@ -154,6 +157,7 @@ p1=$!
   cd $date
   sh ../looptesttime.sh  $name 20 3 $device1
 
+  mv time_*.csv data
   echo "finish start time test"
   sleep 10
 
@@ -174,13 +178,16 @@ p1=$!
 	tmp1=$(($tmp1+1))
   done
 
+ # if [ 1 -eq 2 ];then
   while [ $tmp2 -lt $num ] ; do
   echo "op test $tmp2"
 	operate $device1
 	sleep 5
 	tmp2=$(($tmp2+1))
   done
-
+  
+ # fi
+  
   sleep 5
 
   echo "start time,fg,bg,op finish test,deal with data,pull data to directory"
@@ -188,23 +195,22 @@ p1=$!
 
   sleep 5
 
-  mkdir -p ./$date/SysPerf
-  mv time_*.csv ./$date
+  mkdir -p ./$date/data/SysPerf
+ # mv time_*.csv ./$date
 
-  adb -s $device1 pull "/sdcard/AutoTester/SysPerf" "./$date/SysPerf"
+  adb -s $device1 pull "/sdcard/AutoTester/SysPerf" "./$date/data/SysPerf"
 
   sleep 5
 
-  adb -s $device1 pull "/sdcard/AutoTester/result" "./$date/SysPerf"
+  adb -s $device1 pull "/sdcard/AutoTester/result" "./$date/data/SysPerf"
 
   sleep 5
   echo "finish op ,fg,bg test"
 }&
   p2=$!
 
-  wait p1 && wait p2
+  wait $p1 && wait $p2
   
-fi
 
   echo   "Success! Finish test" 
   
@@ -216,4 +222,25 @@ fi
   tar -czf $date/all.tar.gz $date/data
 }
 
-proc $1 $2 $3 $4 $5
+#获取配置文件信息
+echo `pwd`
+. ./config
+
+echo device1 $device1
+echo device2 $device2
+
+if [ -z $device1 ];then
+
+    echo "no device1,exit"
+	exit 0	
+fi
+if [ -z $device2 ];then
+
+    echo "no device2,exit"
+	exit 0
+fi
+  
+proc $1 $2 $device1 $device2 $5
+echo success,all test finish!
+
+
