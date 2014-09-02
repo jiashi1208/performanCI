@@ -73,6 +73,10 @@ public class SystemPerformTest2
     File[] searchResult = search.listFiles();
     
     String[] choice = { "SingleSearch", "MultiSearch", "BusLine", "CarLine", "WalkLine", "GeneralSearch", "NearbySearch", "ReGeoSearch", "Sug" };
+	if(searchResult!=null){
+	
+	System.out.println("not null");
+	
     for (File file : searchResult) {
       if (file.getName().contains("SearchResult"))
       {
@@ -98,6 +102,16 @@ public class SystemPerformTest2
         break;
       }
     }
+	}else{
+	   System.out.println("is null");
+	
+	   sb.append("SearchType---Time---NetIn---NetOut\n");
+	   
+	   for (int i = 0; i < 9; i++){
+	      sb.append(choice[i] + "---," + -1 + "," + -1 + "," + -1 + "\n");
+	   }
+	   System.out.println(sb.toString());
+	}
     File result1 = new File(".\\"+date+"\\TotalResult.csv");
     FileOutputStream fos = new FileOutputStream(result1);
     Object out = new OutputStreamWriter(fos, "UTF-8");
