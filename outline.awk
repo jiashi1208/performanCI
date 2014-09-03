@@ -6,34 +6,30 @@ i++
 array[i]=$1
 }
 END{
-  #print length(array)
  
+  print length(array)
   for(j=0;j<length(array);j++){
-  print array[1]
-  print  index(tolower(array[1]),"search")
+  
+   print j
+  # print index(tolower(array[j]),"search")
+    
+  if(index(tolower(array[j]),"search")!=0){
 
-  if(index(tolower(array[i]),"search")!=0){
+    print array[j]> "search.txt"
+  
+  }else if(index(tolower(array[j]),"cpu")!=0){
+  
+    print array[j]> "cpu.txt"
+  
+  }else if(index(tolower(array[j]),"mem")!=0){
     
-	print 333
-    print array[i]> "search.txt"
-  
-  }else if(index(tolower(array[i]),"cpu")){
-  
-    print cpu
-    print array[i]> "cpu.txt"
-  
-  }else if(index(tolower(array[i]),"mem")){
+    print array[j]> "memory.txt"
     
-	print mem
-    print array[i]> "memeory.txt"
-    
-  }else if(index(tolower(array[i]),"starttime")){
+  }else if(index(tolower(array[j]),"starttime")!=0){
   
-    print time
-    print array[i]> "starttime.txt"
+    print array[j]> "starttime.txt"
   }else{
      print 333
   }
-
 }
 }

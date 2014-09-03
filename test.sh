@@ -73,7 +73,7 @@ fi
 if  [ -f cpu.txt ]
    then
    test_result_cpu="fail"
-   describe_cpu="CPU数据异常，具体如下:</br>"
+   describe_cpu="CPU数据异常,具体如下:"
     while read line  
     do  
       describe_cpu+=$line"</br>"
@@ -94,7 +94,7 @@ fi
 if  [ -f memory.txt ]
    then
    test_result_mem="fail"
-   describe_mem="搜索数据异常，具体如下:</br>"
+   describe_mem="搜索数据异常,具体如下:"
     while read line  
     do  
       describe_mem+=$line"</br>"
@@ -105,7 +105,7 @@ if  [ -f memory.txt ]
    else
    
      test_result_mem="pass"
-     describe_mem="搜索测试通过！每项数据都测试完成,且数据都在合理范围内变化."
+     describe_mem="内存测试通过！每项数据都测试完成,且数据都在合理范围内变化."
 	 
 	 url="http://180.149.144.140/ci/DataProcess.php?act=insert_CIPerformance&version="$version"&consumetime=8h30m&fromplatform=性能自动化运行&mbinfo="$mbinfo"&testname=MemAvr&testresult="$test_result_mem"&fromplatform=android&timestamp="$date"&runtime="$date"&describe="$describe_mem"&vertime="$vertime
      echo $url >>url.txt
@@ -115,7 +115,7 @@ fi
 if  [ -f starttime.txt ]
    then
    test_result_starttime="fail"
-   describe_starttime="搜索数据异常，具体如下:</br>"
+   describe_starttime="启动时间异常,具体如下:"
     while read line
     do  
       describe_starttime+=$line"</br>"
@@ -126,7 +126,7 @@ if  [ -f starttime.txt ]
    else
    
      test_result_starttime="pass"
-     describe_starttime="搜索测试通过！每项数据都测试完成,且数据都在合理范围内变化."
+     describe_starttime="启动时间测试通过!每项数据都测试完成,且数据都在合理范围内变化."
 	 
 	 url="http://180.149.144.140/ci/DataProcess.php?act=insert_CIPerformance&version="$version"&consumetime=8h30m&fromplatform=性能自动化运行&mbinfo="$mbinfo"&testname=StartTime&testresult="$test_result_starttime"&fromplatform=android&timestamp="$date"&runtime="$date"&describe="$describe_starttime"&vertime="$vertime
      echo $url >>url.txt
