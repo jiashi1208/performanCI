@@ -225,6 +225,9 @@ p1=$!
 #获取配置文件信息
 echo `pwd`
 . ./config
+#去掉最后一个字符，有可能是换行符等等。
+device1=${device1%?}
+device2=${device2%?}
 
 echo device1 $device1
 echo device2 $device2
