@@ -19,14 +19,14 @@ END{
 	  
 	     #排除比较电量，网络，最高速度等。
 	     test_result="pass"
-	     describe=key"数据正常"
+	     describe="数据正常"
 	  
 	  }else {
 	  
 	    #没有值，为-1
 	    if(match(array1[key],"-1.00")||match(array1[key],"-1")){
 		  test_result="fail"
-	      describe=key"数据为空" 
+	      describe="数据为空" 
 		  summary=key"数据为空;"
 		  print summary > "error.txt"
 		  
@@ -37,12 +37,12 @@ END{
 		if(compare(array1[key],array2[key])==1){
 		
 		 test_result="pass"
-	     describe="data_is_ok"
+	     describe="数据正常"
 		
 		}else if(compare(array1[key],array2[key])==0){
 		
 		 test_result="fail"
-	     describe=key"数据不正常,变化幅度超过标准值20%"
+	     describe="数据不正常,变化幅度超过标准值20%;"
 		 summary=key"数据不正常,变化幅度超过标准值20%;"
 		 print summary > "error.txt"
 		}
