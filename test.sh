@@ -94,7 +94,7 @@ fi
 if  [ -f memory.txt ]
    then
    test_result_mem="fail"
-   describe_mem="搜索数据异常,具体如下:"
+   describe_mem="内存测试数据异常,具体如下:"
     while read line  
     do  
       describe_mem+=$line"</br>"
